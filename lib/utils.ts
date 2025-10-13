@@ -1,3 +1,8 @@
+import * as Contacts from 'expo-contacts'
+import * as Device from 'expo-device'
+import * as Notifications from 'expo-notifications'
+import { Platform } from 'react-native'
+
 export function randomNumBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
@@ -12,4 +17,48 @@ export function hexToRgb(hex: string) {
         b: parseInt(result[3], 16),
       }
     : null
+}
+
+export async function registerForPushNotificationsAsync(): Promise<string> {
+  let token = ''
+
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('messages', {
+      name: 'Messages',
+      importance: Notifications.AndroidImportance.MAX,
+    })
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync()
+    let finalStatus = existingStatus
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync()
+      finalStatus = status
+    }
+    if (finalStatus !== 'granted') {
+      return token
+    }
+
+    try {
+      token = (await Notifications.getDevicePushTokenAsync()).data
+    } catch (e) {
+      token = `${e}`
+    }
+  }
+
+  return token
+}
+
+export async function getContactsAsync(): Promise<Contacts.Contact[]> {
+  const { status } = await Contacts.requestPermissionsAsync()
+
+  if (status === 'granted') {
+    const contacts = await Contacts.getContactsAsync({
+      fields: [Contacts.Fields.FirstName, Contacts.Fields.LastName, Contacts.Fields.PhoneNumbers],
+    })
+    return contacts.data
+  }
+
+  return []
 }

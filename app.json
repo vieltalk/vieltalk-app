@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "vieltalk-chat-mobile",
-    "slug": "vieltalk-chat-mobile",
+    "name": "vieltalk",
+    "slug": "vieltalk",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "vieltalkchatmobile",
+    "scheme": "vieltalk",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.vieltalkchatmobile"
+      "bundleIdentifier": "com.anonymous.vieltalk"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +21,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.vieltalkchatmobile"
+      "package": "com.anonymous.vieltalk",
+      "permissions": ["RECEIVE_BOOT_COMPLETED", "SCHEDULE_EXACT_ALARM"]
     },
     "web": {
       "output": "static",
@@ -54,6 +55,12 @@
         "expo-asset",
         {
           "assets": ["./assets"]
+        }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow Vieltalk to access your contacts."
         }
       ]
     ],
