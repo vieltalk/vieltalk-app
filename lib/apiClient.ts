@@ -94,3 +94,6 @@ export function createApiClient(options?: CreateAxiosDefaults) {
 }
 
 export const apiClient = createApiClient()
+export const cdnApiClient = createApiClient({
+  baseURL: process.env.EXPO_PUBLIC_CDN_BASE_URL,
+})

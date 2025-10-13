@@ -1,7 +1,13 @@
+import { clsx, type ClassValue } from 'clsx'
 import * as Contacts from 'expo-contacts'
 import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
+import { twMerge } from 'tailwind-merge'
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 export function randomNumBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -61,4 +67,16 @@ export async function getContactsAsync(): Promise<Contacts.Contact[]> {
   }
 
   return []
+}
+
+export function isValidPhoneNumber(phoneNumber: string): boolean {
+  if (/[^0-9]/.test(phoneNumber)) {
+    return false
+  }
+
+  if (!phoneNumber.startsWith('0')) {
+    phoneNumber = `0${phoneNumber}`
+  }
+
+  return phoneNumber.length === 9 || phoneNumber.length === 10
 }

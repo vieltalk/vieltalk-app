@@ -1,4 +1,5 @@
-import { ApiEndpoints, apiClient } from '@/lib'
+import { apiClient } from '@/lib/apiClient'
+import { ApiEndpoints } from '@/lib/constants'
 import { UserOnboardRequest } from './shared.types'
 
 export function userOnboard(onboardRequest: UserOnboardRequest) {
