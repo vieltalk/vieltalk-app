@@ -38,10 +38,12 @@ export async function registerForPushNotificationsAsync(): Promise<string> {
   if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync()
     let finalStatus = existingStatus
+
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync()
       finalStatus = status
     }
+
     if (finalStatus !== 'granted') {
       return token
     }
@@ -69,14 +71,6 @@ export async function getContactsAsync(): Promise<Contacts.Contact[]> {
   return []
 }
 
-export function isValidPhoneNumber(phoneNumber: string): boolean {
-  if (/[^0-9]/.test(phoneNumber)) {
-    return false
-  }
-
-  if (!phoneNumber.startsWith('0')) {
-    phoneNumber = `0${phoneNumber}`
-  }
-
-  return phoneNumber.length === 9 || phoneNumber.length === 10
+export function formatPhoneNumber(phoneNumber: string): string {
+  return `${phoneNumber.substring(0, 3)} ${phoneNumber.substring(3, 5)} ${phoneNumber.substring(5, 8)} ${phoneNumber.substring(8)}`
 }

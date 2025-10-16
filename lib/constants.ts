@@ -1,5 +1,5 @@
-export enum ApiEndpoints {
-  USER_ONBOARD = '/user/onboard',
+export const API_ENDPOINTS = {
+  USER_ONBOARD: '/user/onboard',
 }
 
 export const CDN_API_ENDPOINTS = {

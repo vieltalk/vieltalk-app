@@ -16,15 +16,22 @@ async function requestInterceptor(config: AxiosConfigWithMetadata) {
 
   const axiosId = uuidv4()
 
-  console.log('outbound request', {
-    baseUrl: config.baseURL,
-    method: config.method,
-    data: config.data,
-    params: config.params,
-    url: config.url,
-    headers: config.headers,
-    axiosId,
-  })
+  console.log(
+    'outbound request',
+    JSON.stringify(
+      {
+        baseUrl: config.baseURL,
+        method: config.method,
+        data: config.data,
+        params: config.params,
+        url: config.url,
+        headers: config.headers,
+        axiosId,
+      },
+      null,
+      2,
+    ),
+  )
 
   const body = config.data
 
@@ -49,14 +56,21 @@ async function requestInterceptor(config: AxiosConfigWithMetadata) {
 }
 
 function responseInterceptor(response: AxiosResponse) {
-  console.log('outbound response success', {
-    baseUrl: response.config.baseURL,
-    url: response.config.url,
-    status: `${response.status}:${response.statusText}`,
-    headers: response.headers,
-    body: response.data,
-    axiosId: (response.config as AxiosConfigWithMetadata).metadata?.axiosId,
-  })
+  console.log(
+    'outbound response success',
+    JSON.stringify(
+      {
+        baseUrl: response.config.baseURL,
+        url: response.config.url,
+        status: `${response.status}:${response.statusText}`,
+        headers: response.headers,
+        body: response.data,
+        axiosId: (response.config as AxiosConfigWithMetadata).metadata?.axiosId,
+      },
+      null,
+      2,
+    ),
+  )
 
   return response
 }
@@ -67,14 +81,21 @@ function responseErrorInterceptor(error: any) {
 
   if (error instanceof Error) {
     const axiosError = error as AxiosError
-    console.log('outbound response failure', {
-      baseUrl: axiosError?.response?.config.baseURL,
-      url: axiosError?.response?.config.url,
-      status: axiosError.response?.status,
-      headers: axiosError.response?.headers,
-      body: axiosError.response?.data,
-      axiosId: (axiosError?.response?.config as AxiosConfigWithMetadata).metadata?.axiosId,
-    })
+    console.log(
+      'outbound response failure',
+      JSON.stringify(
+        {
+          baseUrl: axiosError?.response?.config.baseURL,
+          url: axiosError?.response?.config.url,
+          status: axiosError.response?.status,
+          headers: axiosError.response?.headers,
+          body: axiosError.response?.data,
+          axiosId: (axiosError?.response?.config as AxiosConfigWithMetadata).metadata?.axiosId,
+        },
+        null,
+        2,
+      ),
+    )
   }
 
   return Promise.reject(error)

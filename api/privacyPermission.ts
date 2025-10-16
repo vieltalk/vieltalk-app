@@ -8,7 +8,8 @@ export async function getPrivacyPermission() {
     const res = await cdnApiClient.get<PrivacyPermissionItem[]>(CDN_API_ENDPOINTS.PRIVACY_PERMISSION(i18n.locale))
 
     return res.data.sort((a, b) => a.sort - b.sort)
-  } catch {
+  } catch (error) {
+    console.log(error)
     return []
   }
 }

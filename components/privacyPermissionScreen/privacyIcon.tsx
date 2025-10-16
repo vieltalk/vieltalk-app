@@ -1,19 +1,19 @@
 import { PrivacyPermission } from '@/api/shared.types'
-import { Bell, Camera, MapPin, Shield, Users } from 'lucide-react-native'
+import { Bell, Camera, CircleQuestionMark, MapPin, Shield, Users } from 'lucide-react-native'
 
 export function PrivacyIcon({ id }: { id: PrivacyPermission }) {
   switch (id) {
     case PrivacyPermission.PRIVACY:
-      return <Shield />
+      return Shield
     case PrivacyPermission.CONTACTS:
-      return <Users />
+      return Users
     case PrivacyPermission.NOTIFICATIONS:
-      return <Bell />
+      return Bell
     case PrivacyPermission.LOCATION:
-      return <MapPin />
+      return MapPin
     case PrivacyPermission.CAMERA:
-      return <Camera />
+      return Camera
     default:
-      return null
+      return CircleQuestionMark
   }
 }

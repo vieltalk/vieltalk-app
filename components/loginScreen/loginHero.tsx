@@ -21,7 +21,7 @@ export function LoginHero() {
         </Box>
       </Box>
       <VStack className="p-4" space="md">
-        <Heading size="xl" className="text-center">
+        <Heading className="text-center">
           <Trans>Welcome to VielTalk</Trans>
         </Heading>
         <Text className="px-4 text-center text-sm">

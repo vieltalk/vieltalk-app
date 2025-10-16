@@ -1,9 +1,8 @@
+import { PrivacyPermissionFooter } from '@/components/privacyPermissionScreen/privacyPermissionFooter'
 import { PrivacyPermissionHeader } from '@/components/privacyPermissionScreen/privacyPermissionHeader'
 import { PrivacyPermissionListing } from '@/components/privacyPermissionScreen/privacyPermissionList'
-import { Box } from '@/components/ui/box'
-import { Button, ButtonText } from '@/components/ui/button'
 import { VStack } from '@/components/ui/vstack'
-import { PrivacyPermissionProvider } from '@/contexts/privacyPermission'
+import { PrivacyPermissionProvider } from '@/contexts/privacyPermissionScreen'
 import { Stack } from 'expo-router'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -21,11 +20,7 @@ export default function PrivacyPermissionScreen() {
                 <PrivacyPermissionListing />
               </VStack>
             </ScrollView>
-            <Box className="p-4">
-              <Button size="xl">
-                <ButtonText>Allow Permissions</ButtonText>
-              </Button>
-            </Box>
+            <PrivacyPermissionFooter />
           </VStack>
         </SafeAreaView>
       </PrivacyPermissionProvider>
