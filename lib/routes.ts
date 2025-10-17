@@ -9,4 +9,5 @@ export enum ROUTE {
   PRIVACY_PERMISSION = '/privacyPermission',
   INPUT_PHONE = '/inputPhone',
   VERIFY_OTP = '/verifyOtp',
+  CONTACT_SYNC = '/contactSync',
 }

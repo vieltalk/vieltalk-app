@@ -27,7 +27,7 @@ export function PrivacyPermissionProvider({ children }: { children?: React.React
   const { i18n } = useLingui()
   const router = useRouter()
 
-  const store = useRef<StoreApi<PrivacyPermissionScreenState> | undefined>(undefined)
+  const store = useRef<StoreApi<PrivacyPermissionScreenState>>(undefined)
 
   if (!store.current) {
     store.current = createPrivacyPermissionScreenStore()

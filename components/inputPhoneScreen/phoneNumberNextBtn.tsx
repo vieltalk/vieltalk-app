@@ -1,4 +1,5 @@
 import { useInputPhoneScreenContext } from '@/contexts/inputPhoneScreen'
+import { Trans } from '@lingui/react/macro'
 import { Box } from '../ui/box'
 import { Button, ButtonText } from '../ui/button'
 
@@ -8,7 +9,9 @@ export function PhoneNumberNextBtn() {
   return (
     <Box className="p-4">
       <Button size="xl" onPress={handleNextPress}>
-        <ButtonText>Next</ButtonText>
+        <ButtonText>
+          <Trans>Next</Trans>
+        </ButtonText>
       </Button>
     </Box>
   )

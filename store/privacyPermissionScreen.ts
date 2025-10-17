@@ -2,8 +2,6 @@ import { PrivacyPermission } from '@/api/shared.types'
 import { createStore } from 'zustand'
 
 export interface PrivacyPermissionScreenState {
-  isLoading: boolean
-  setIsLoading: (isLoading: boolean) => void
   allowedPermissions: PrivacyPermission[]
   setAllowedPermissions: (
     newAllowedPermissions: PrivacyPermission[] | ((cur: PrivacyPermission[]) => PrivacyPermission[]),
@@ -12,8 +10,6 @@ export interface PrivacyPermissionScreenState {
 
 export function createPrivacyPermissionScreenStore() {
   return createStore<PrivacyPermissionScreenState>()((set) => ({
-    isLoading: false,
-    setIsLoading: (isLoading: boolean) => set({ isLoading }),
     allowedPermissions: Object.values(PrivacyPermission).filter(Number) as PrivacyPermission[],
     setAllowedPermissions: (
       newAllowedPermissions: PrivacyPermission[] | ((cur: PrivacyPermission[]) => PrivacyPermission[]),
