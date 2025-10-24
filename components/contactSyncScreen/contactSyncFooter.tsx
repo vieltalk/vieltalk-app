@@ -8,7 +8,7 @@ import { HStack } from '../ui/hstack'
 import { Text } from '../ui/text'
 
 export function ContactSyncFooter() {
-  const { stateStore } = useContactSyncScreenContext()
+  const { stateStore, goToChatList } = useContactSyncScreenContext()
 
   const isSyncing = useStore(stateStore, (state) => state.isSyncing)
   const isSyncComplete = useStore(stateStore, (state) => state.isSyncComplete)
@@ -31,7 +31,7 @@ export function ContactSyncFooter() {
   if (isSyncComplete) {
     return (
       <Box className="p-4">
-        <Button size="xl">
+        <Button size="xl" onPress={goToChatList}>
           <ButtonText>
             <Trans>Start Chatting</Trans>
           </ButtonText>
@@ -42,7 +42,7 @@ export function ContactSyncFooter() {
 
   return (
     <HStack className="items-center justify-between p-4">
-      <Button size="xl" action="secondary">
+      <Button size="xl" action="secondary" onPress={goToChatList}>
         <ButtonText>
           <Trans>Not Now</Trans>
         </ButtonText>

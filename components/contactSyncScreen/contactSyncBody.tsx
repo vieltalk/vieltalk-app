@@ -12,7 +12,7 @@ export function ContactSyncBody() {
   const syncDescription = useStore(stateStore, (state) => state.syncDescription)
 
   return (
-    <VStack>
+    <VStack className="items-center">
       <Text size="sm" className="text-primary-400">
         {syncPercentage}%
       </Text>

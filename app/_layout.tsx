@@ -24,7 +24,7 @@ export default function RootLayout() {
         <I18nProvider>
           <Stack>
             <Stack.Protected guard={isLoggedIn}>
-              <Stack.Screen name="(protected)" />
+              <Stack.Screen name="(protected)" options={{ headerShown: false }} />
             </Stack.Protected>
             <Stack.Protected guard={!isLoggedIn}>
               <Stack.Screen name="login" />

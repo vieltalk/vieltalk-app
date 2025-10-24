@@ -4,7 +4,7 @@
  * @var {string} value - Path to screen file
  */
 export enum ROUTE {
-  HOME = '(protected)/',
+  HOME = '/',
   LOGIN = '/login',
   PRIVACY_PERMISSION = '/privacyPermission',
   INPUT_PHONE = '/inputPhone',

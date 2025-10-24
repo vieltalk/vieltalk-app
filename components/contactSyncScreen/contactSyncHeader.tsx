@@ -1,12 +1,16 @@
 import { useContactSyncScreenContext } from '@/contexts/contactSyncScreen'
+import { useThemeColor } from '@/hooks/use-theme-color'
 import { cn } from '@/lib/utils'
 import { RefreshCw, UserRoundCheck, UserRoundSearch } from 'lucide-react-native'
 import { useStore } from 'zustand'
+import { CircularProgress } from '../circularProgress'
 import { Box } from '../ui/box'
 import { Icon } from '../ui/icon'
 
 export function ContactSyncHeader() {
   const { stateStore } = useContactSyncScreenContext()
+  const backgroundColor = useThemeColor({}, 'outline')
+  const progressColor = useThemeColor({}, 'primary')
 
   const isSyncing = useStore(stateStore, (state) => state.isSyncing)
   const isSyncComplete = useStore(stateStore, (state) => state.isSyncComplete)
@@ -22,9 +26,12 @@ export function ContactSyncHeader() {
   }
 
   return (
-    <Box className="items-center justify-center pt-20">
-      <Box className="rounded-full bg-primary-100 p-4">
-        <Icon as={DisplayIcon} className={cn({ 'animate-spin': isSyncing })} size={54} />
+    <Box className="relative mt-16 h-28 items-center justify-center">
+      <Box className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+        <CircularProgress size={90} backgroundColor={backgroundColor} progressColor={progressColor} strokeWidth={4} />
+      </Box>
+      <Box className="absolute left-1/2 top-1/2 h-[80px] w-[80px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-100">
+        <Icon as={DisplayIcon} className={cn({ 'animate-spin': isSyncing })} size={32} />
       </Box>
     </Box>
   )

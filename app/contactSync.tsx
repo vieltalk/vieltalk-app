@@ -12,10 +12,10 @@ export default function ContactSync() {
     <>
       <Stack.Screen options={{ headerTransparent: true, title: '' }} />
       <ContactSyncScreenProvider>
-        <SafeAreaView className="flex-1" edges={['bottom']}>
+        <SafeAreaView className="flex-1">
           <VStack className="flex-1">
             <ScrollView className="flex-1">
-              <VStack>
+              <VStack space="md">
                 <ContactSyncHeader />
                 <ContactSyncBody />
               </VStack>
