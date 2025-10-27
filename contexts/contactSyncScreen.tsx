@@ -1,7 +1,7 @@
 import { ROUTE } from '@/lib/routes'
 import { ContactSyncScreenState, createContactSyncScreenStore } from '@/store/contactSyncScreen'
 import { useGlobalStore } from '@/store/global/store'
-import { useRouter } from 'expo-router'
+import { useNavigation } from 'expo-router'
 import { createContext, use, useRef } from 'react'
 import { StoreApi } from 'zustand'
 
@@ -13,7 +13,7 @@ interface ContactSyncScreenContextValue {
 const ContactSyncScreenContext = createContext<ContactSyncScreenContextValue | undefined>(undefined)
 
 export function ContactSyncScreenProvider({ children }: { children?: React.ReactNode }) {
-  const router = useRouter()
+  const navigation = useNavigation()
   const setIsLoggedIn = useGlobalStore((state) => state.setIsLoggedIn)
 
   const store = useRef<StoreApi<ContactSyncScreenState>>(undefined)
@@ -24,7 +24,7 @@ export function ContactSyncScreenProvider({ children }: { children?: React.React
 
   const goToChatList = () => {
     setIsLoggedIn(true)
-    router.replace(ROUTE.HOME)
+    navigation.reset({ index: 0, routes: [{ name: ROUTE.HOME as never }] })
   }
 
   return (

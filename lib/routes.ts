@@ -10,4 +10,5 @@ export enum ROUTE {
   INPUT_PHONE = '/inputPhone',
   VERIFY_OTP = '/verifyOtp',
   CONTACT_SYNC = '/contactSync',
+  INPUT_USERNAME = '/inputUsername',
 }

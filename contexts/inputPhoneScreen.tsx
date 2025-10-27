@@ -43,7 +43,10 @@ export function InputPhoneScreenProvider({ children }: { children?: React.ReactN
 
   const onSubmit = (data: PhoneNumberFormScheme) => {
     const phone = data.phoneNumber.startsWith('0') ? data.phoneNumber.slice(1) : data.phoneNumber
-    router.push(`${ROUTE.VERIFY_OTP}?phone=855${phone}`)
+
+    console.log(phone)
+
+    router.push(ROUTE.CONTACT_SYNC)
   }
 
   return (

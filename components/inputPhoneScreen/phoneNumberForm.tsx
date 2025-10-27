@@ -31,7 +31,7 @@ export function PhoneNumberForm() {
               />
             </Input>
             <FormControlError>
-              <FormControlErrorText className="text-error-500">{fieldState.error?.message}</FormControlErrorText>
+              <FormControlErrorText>{fieldState.error?.message}</FormControlErrorText>
             </FormControlError>
           </FormControl>
         )
