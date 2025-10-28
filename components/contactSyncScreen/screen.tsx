@@ -14,7 +14,7 @@ export default function ContactSyncScreen() {
       <ContactSyncScreenProvider>
         <SafeAreaView className="flex-1">
           <VStack className="flex-1">
-            <ScrollView className="flex-1">
+            <ScrollView className="flex-1 px-4">
               <VStack space="md">
                 <ContactSyncHeader />
                 <ContactSyncBody />

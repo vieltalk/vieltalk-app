@@ -8,7 +8,7 @@ import { HStack } from '../ui/hstack'
 import { Text } from '../ui/text'
 
 export function ContactSyncFooter() {
-  const { stateStore, goToChatList } = useContactSyncScreenContext()
+  const { stateStore, goToChatList, handleSync } = useContactSyncScreenContext()
 
   const isSyncing = useStore(stateStore, (state) => state.isSyncing)
   const isSyncComplete = useStore(stateStore, (state) => state.isSyncComplete)
@@ -16,11 +16,16 @@ export function ContactSyncFooter() {
   if (isSyncing) {
     return (
       <Box className="p-4">
-        <Card size="md" variant="filled">
+        <Card size="md" variant="filled" className="border border-outline-200">
           <HStack>
             <Text>
-              <Text className="font-bold">Privacy protected</Text>: Your contacts are encrypted and only used for friend
-              discovery. We never store or share your contact information.
+              <Text className="font-bold">
+                <Trans>Privacy protected: </Trans>
+              </Text>
+              <Trans>
+                Your contacts are encrypted and only used for friend discovery. We never store or share your contact
+                information.
+              </Trans>
             </Text>
           </HStack>
         </Card>
@@ -47,7 +52,7 @@ export function ContactSyncFooter() {
           <Trans>Not Now</Trans>
         </ButtonText>
       </Button>
-      <Button size="xl">
+      <Button size="xl" onPress={handleSync}>
         <ButtonText>
           <Trans>Sync</Trans>
         </ButtonText>
