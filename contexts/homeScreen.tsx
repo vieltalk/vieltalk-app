@@ -12,9 +12,11 @@ const HomeScreenContext = createContext<HomeScreenContextValue | undefined>(unde
 export function HomeScreenProvider({ children }: { children?: React.ReactNode }) {
   const router = useRouter()
   const setIsLoggedIn = useGlobalStore((state) => state.setIsLoggedIn)
+  const setUserInfo = useGlobalStore((state) => state.setUserInfo)
 
   const handleLogout = () => {
     setIsLoggedIn(false)
+    setUserInfo(null)
     router.replace(ROUTE.LOGIN)
   }
 

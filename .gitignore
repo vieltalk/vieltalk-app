@@ -49,3 +49,4 @@ pnpm-lock.yaml
 
 # Google services
 google-services.json
+GoogleService-Info.plist

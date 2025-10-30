@@ -1,8 +1,4 @@
 import axios, { AxiosError, AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios'
-import Aes from 'react-native-aes-crypto'
-import AesGcmCrypto from 'react-native-aes-gcm-crypto'
-import 'react-native-get-random-values'
-import { RSA } from 'react-native-rsa-native'
 import { v4 as uuidv4 } from 'uuid'
 
 type AxiosConfigWithMetadata = InternalAxiosRequestConfig & {
@@ -32,21 +28,6 @@ async function requestInterceptor(config: AxiosConfigWithMetadata) {
       2,
     ),
   )
-
-  const body = config.data
-
-  if (body && !(body instanceof FormData)) {
-    const key = await Aes.randomKey(32)
-
-    const encrypted = await AesGcmCrypto.encrypt(JSON.stringify(body), true, key)
-
-    config.data = {
-      data: encrypted.content,
-      key: await RSA.encrypt(key, process.env.EXPO_PUBLIC_API_PUBLIC_KEY || ''),
-      iv: await RSA.encrypt(encrypted.iv, process.env.EXPO_PUBLIC_API_PUBLIC_KEY || ''),
-      tag: await RSA.encrypt(encrypted.tag, process.env.EXPO_PUBLIC_API_PUBLIC_KEY || ''),
-    }
-  }
 
   config.metadata = {
     axiosId: axiosId,

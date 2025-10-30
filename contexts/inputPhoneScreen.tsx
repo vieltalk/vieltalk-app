@@ -1,8 +1,15 @@
+import { userOnboard } from '@/api/user'
 import { ROUTE } from '@/lib/routes'
+import { useGlobalStore } from '@/store/global/store'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { sha256 } from '@noble/hashes/sha2.js'
+import { useMutation } from '@tanstack/react-query'
+import { modelName } from 'expo-device'
 import { useRouter } from 'expo-router'
 import { createContext, use } from 'react'
 import { UseFormReturn, useForm } from 'react-hook-form'
+import { Platform } from 'react-native'
+import { getSystemVersion, getUniqueId } from 'react-native-device-info'
 import { z } from 'zod'
 
 const phoneNumberFormScheme = z
@@ -27,12 +34,15 @@ type PhoneNumberFormScheme = z.infer<typeof phoneNumberFormScheme>
 interface InputPhoneScreenContextValue {
   form: UseFormReturn<PhoneNumberFormScheme>
   handleNextPress: () => void
+  isLoading: boolean
 }
 
 const InputPhoneScreenContext = createContext<InputPhoneScreenContextValue | undefined>(undefined)
 
 export function InputPhoneScreenProvider({ children }: { children?: React.ReactNode }) {
   const router = useRouter()
+  const setIsLoggedIn = useGlobalStore((state) => state.setIsLoggedIn)
+  const setUserInfo = useGlobalStore((state) => state.setUserInfo)
 
   const phoneNumberForm = useForm<PhoneNumberFormScheme>({
     resolver: zodResolver(phoneNumberFormScheme),
@@ -41,16 +51,42 @@ export function InputPhoneScreenProvider({ children }: { children?: React.ReactN
     },
   })
 
-  const onSubmit = (data: PhoneNumberFormScheme) => {
+  const userOnboardMutation = useMutation({
+    mutationFn: userOnboard,
+    onSuccess: (data) => {
+      setIsLoggedIn(true)
+      setUserInfo({ id: data._id })
+      router.push(ROUTE.CONTACT_SYNC)
+    },
+  })
+
+  const onSubmit = async (data: PhoneNumberFormScheme) => {
     const phone = data.phoneNumber.startsWith('0') ? data.phoneNumber.slice(1) : data.phoneNumber
 
-    console.log(phone)
+    const deviceId = await getUniqueId()
+    const deviceModel = modelName || ''
+    const osVersion = getSystemVersion()
+    const phoneNumber = new TextDecoder().decode(sha256(new TextEncoder().encode(phone)))
 
-    router.push(ROUTE.CONTACT_SYNC)
+    userOnboardMutation.mutate({
+      avatar: '',
+      deviceId,
+      phoneNumber,
+      deviceType: Platform.OS,
+      deviceModel,
+      osVersion,
+      appVersion: '1.0.0',
+    })
   }
 
   return (
-    <InputPhoneScreenContext value={{ form: phoneNumberForm, handleNextPress: phoneNumberForm.handleSubmit(onSubmit) }}>
+    <InputPhoneScreenContext
+      value={{
+        form: phoneNumberForm,
+        handleNextPress: phoneNumberForm.handleSubmit(onSubmit),
+        isLoading: userOnboardMutation.isPending,
+      }}
+    >
       {children}
     </InputPhoneScreenContext>
   )

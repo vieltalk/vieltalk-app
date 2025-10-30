@@ -6,7 +6,7 @@ interface UserInfoModel {
 export interface UserSlice {
   isLoggedIn: boolean
   userInfo: UserInfoModel | null
-  setUserInfo: (userInfo: UserInfoModel) => void
+  setUserInfo: (userInfo: UserInfoModel | null) => void
   setIsLoggedIn: (isLoggedIn: boolean) => void
 }
 

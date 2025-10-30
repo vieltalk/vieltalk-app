@@ -26,3 +26,7 @@ export enum PrivacyPermission {
   LOCATION = 4,
   CAMERA = 5,
 }
+
+export interface UserOnboardResponse {
+  _id: string
+}

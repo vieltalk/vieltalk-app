@@ -1,7 +1,6 @@
 import { ROUTE } from '@/lib/routes'
 import { randomNumBetween } from '@/lib/utils'
 import { ContactSyncScreenState, createContactSyncScreenStore } from '@/store/contactSyncScreen'
-import { useGlobalStore } from '@/store/global/store'
 import { useRouter } from 'expo-router'
 import { createContext, use, useEffect, useRef } from 'react'
 import { StoreApi, useStore } from 'zustand'
@@ -16,7 +15,6 @@ const ContactSyncScreenContext = createContext<ContactSyncScreenContextValue | u
 
 export function ContactSyncScreenProvider({ children }: { children?: React.ReactNode }) {
   const router = useRouter()
-  const setIsLoggedIn = useGlobalStore((state) => state.setIsLoggedIn)
 
   const store = useRef<StoreApi<ContactSyncScreenState>>(undefined)
   const mockSyncInterval = useRef<number | undefined>(undefined)
@@ -35,7 +33,6 @@ export function ContactSyncScreenProvider({ children }: { children?: React.React
   const setSyncDescription = useStore(store.current, (state) => state.setSyncDescription)
 
   const goToChatList = () => {
-    setIsLoggedIn(true)
     router.replace(ROUTE.HOME)
   }
 
