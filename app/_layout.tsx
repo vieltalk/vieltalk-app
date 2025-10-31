@@ -5,7 +5,7 @@ import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider'
 import '@/global.css'
 import { I18nProvider } from '@/locale/i18nProvider'
 import { useGlobalStore } from '@/store/global/store'
-import analytics from '@react-native-firebase/analytics'
+import { getAnalytics, logEvent } from '@react-native-firebase/analytics'
 import { Stack, usePathname } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
@@ -25,7 +25,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     ;(async () => {
-      await analytics().logScreenView({
+      logEvent(getAnalytics(), 'screen_view' as any, {
         screen_name: pathname,
         screen_class: pathname,
       })

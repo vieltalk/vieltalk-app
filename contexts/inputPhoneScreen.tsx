@@ -3,7 +3,9 @@ import { ROUTE } from '@/lib/routes'
 import { useGlobalStore } from '@/store/global/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { sha256 } from '@noble/hashes/sha2.js'
+import { bytesToHex } from '@noble/hashes/utils.js'
 import { useMutation } from '@tanstack/react-query'
+import { isAxiosError } from 'axios'
 import { modelName } from 'expo-device'
 import { useRouter } from 'expo-router'
 import { createContext, use } from 'react'
@@ -58,6 +60,13 @@ export function InputPhoneScreenProvider({ children }: { children?: React.ReactN
       setUserInfo({ id: data._id })
       router.push(ROUTE.CONTACT_SYNC)
     },
+    onError: (err) => {
+      if (isAxiosError(err)) {
+        phoneNumberForm.setError('phoneNumber', {
+          message: err.response?.data.message,
+        })
+      }
+    },
   })
 
   const onSubmit = async (data: PhoneNumberFormScheme) => {
@@ -66,7 +75,7 @@ export function InputPhoneScreenProvider({ children }: { children?: React.ReactN
     const deviceId = await getUniqueId()
     const deviceModel = modelName || ''
     const osVersion = getSystemVersion()
-    const phoneNumber = new TextDecoder().decode(sha256(new TextEncoder().encode(phone)))
+    const phoneNumber = bytesToHex(sha256(new TextEncoder().encode(phone)))
 
     userOnboardMutation.mutate({
       avatar: '',

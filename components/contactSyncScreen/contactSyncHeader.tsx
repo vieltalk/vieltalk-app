@@ -27,9 +27,17 @@ export function ContactSyncHeader() {
         />
       </Box>
       <Box className="absolute left-1/2 top-1/2 h-[80px] w-[80px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-100">
-        {!isSyncing && !isSyncComplete && <Icon as={UserRoundSearch} size={32} />}
+        {!isSyncing && !isSyncComplete && (
+          <Box className="pl-1.5">
+            <Icon as={UserRoundSearch} size={32} />
+          </Box>
+        )}
         {isSyncing && !isSyncComplete && <Icon as={RefreshCw} className="animate-spin" size={32} />}
-        {isSyncComplete && <Icon as={UserRoundCheck} size={32} />}
+        {isSyncComplete && (
+          <Box className="pl-1.5">
+            <Icon as={UserRoundCheck} size={32} />
+          </Box>
+        )}
       </Box>
     </Box>
   )

@@ -1,5 +1,5 @@
 export const API_ENDPOINTS = {
-  USER_ONBOARD: '/user/onboard',
+  USER_ONBOARD: '/users/onboard',
 }
 
 export const CDN_API_ENDPOINTS = {
