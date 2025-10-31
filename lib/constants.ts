@@ -1,5 +1,6 @@
 export const API_ENDPOINTS = {
   USER_ONBOARD: '/users/onboard',
+  CONTACT_SYNC: '/contacts/sync',
 }
 
 export const CDN_API_ENDPOINTS = {

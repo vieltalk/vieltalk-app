@@ -1,9 +1,8 @@
 import { userOnboard } from '@/api/user'
+import { hashString } from '@/lib/encryption'
 import { ROUTE } from '@/lib/routes'
 import { useGlobalStore } from '@/store/global/store'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { sha256 } from '@noble/hashes/sha2.js'
-import { bytesToHex } from '@noble/hashes/utils.js'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { modelName } from 'expo-device'
@@ -75,17 +74,36 @@ export function InputPhoneScreenProvider({ children }: { children?: React.ReactN
     const deviceId = await getUniqueId()
     const deviceModel = modelName || ''
     const osVersion = getSystemVersion()
-    const phoneNumber = bytesToHex(sha256(new TextEncoder().encode(phone)))
+    const phoneNumber = hashString(phone)
 
-    userOnboardMutation.mutate({
-      avatar: '',
-      deviceId,
-      phoneNumber,
-      deviceType: Platform.OS,
-      deviceModel,
-      osVersion,
-      appVersion: '1.0.0',
-    })
+    console.log(
+      'userOnboardMutation',
+      JSON.stringify(
+        {
+          avatar: '',
+          deviceId,
+          phoneNumber,
+          deviceType: Platform.OS,
+          deviceModel,
+          osVersion,
+          appVersion: '1.0.0',
+        },
+        null,
+        2,
+      ),
+    )
+
+    router.push(ROUTE.CONTACT_SYNC)
+
+    // userOnboardMutation.mutate({
+    //   avatar: '',
+    //   deviceId,
+    //   phoneNumber,
+    //   deviceType: Platform.OS,
+    //   deviceModel,
+    //   osVersion,
+    //   appVersion: '1.0.0',
+    // })
   }
 
   return (

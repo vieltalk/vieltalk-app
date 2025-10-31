@@ -1,15 +1,18 @@
 import { getPrivacyPermission } from '@/api/privacyPermission'
 import { PrivacyPermission, PrivacyPermissionItem } from '@/api/shared.types'
 import { ReactQueryKeys } from '@/lib/constants'
+import {
+  requestAudioPermission,
+  requestCameraPermission,
+  requestContactsPermission,
+  requestLocationPermission,
+  requestMediaLibraryPermission,
+  requestNotificationsPermission,
+} from '@/lib/permissions'
 import { ROUTE } from '@/lib/routes'
-import { registerForPushNotificationsAsync } from '@/lib/utils'
 import { PrivacyPermissionScreenState, createPrivacyPermissionScreenStore } from '@/store/privacyPermissionScreen'
 import { useLingui } from '@lingui/react/macro'
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
-import * as Audio from 'expo-audio'
-import * as Contacts from 'expo-contacts'
-import * as ImagePicker from 'expo-image-picker'
-import * as Location from 'expo-location'
 import { useRouter } from 'expo-router'
 import { createContext, use, useRef } from 'react'
 import { StoreApi, useStore } from 'zustand'
@@ -50,36 +53,21 @@ export function PrivacyPermissionProvider({ children }: { children?: React.React
 
   const handleAllowPress = async () => {
     if (allowedPermissions.includes(PrivacyPermission.CONTACTS)) {
-      const { status } = await Contacts.getPermissionsAsync()
-      if (status !== 'granted') {
-        await Contacts.requestPermissionsAsync()
-      }
+      await requestContactsPermission()
     }
 
     if (allowedPermissions.includes(PrivacyPermission.NOTIFICATIONS)) {
-      await registerForPushNotificationsAsync()
+      await requestNotificationsPermission()
     }
 
     if (allowedPermissions.includes(PrivacyPermission.LOCATION)) {
-      const { status } = await Location.getForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        await Location.requestForegroundPermissionsAsync()
-      }
+      await requestLocationPermission()
     }
 
     if (allowedPermissions.includes(PrivacyPermission.CAMERA)) {
-      const { status } = await ImagePicker.getCameraPermissionsAsync()
-      if (status !== 'granted') {
-        await ImagePicker.requestCameraPermissionsAsync()
-      }
-      const { status: mediaLibraryStatus } = await ImagePicker.getMediaLibraryPermissionsAsync()
-      if (mediaLibraryStatus !== 'granted') {
-        await ImagePicker.requestMediaLibraryPermissionsAsync()
-      }
-      const { status: audioStatus } = await Audio.getRecordingPermissionsAsync()
-      if (audioStatus !== 'granted') {
-        await Audio.requestRecordingPermissionsAsync()
-      }
+      await requestCameraPermission()
+      await requestMediaLibraryPermission()
+      await requestAudioPermission()
     }
 
     goNextScreen()

@@ -1,8 +1,15 @@
+import { ContactSyncRequest } from '@/api/shared.types'
+import { contactSync } from '@/api/user'
+import { hashString } from '@/lib/encryption'
+import { getContacts } from '@/lib/permissions'
 import { ROUTE } from '@/lib/routes'
 import { randomNumBetween } from '@/lib/utils'
 import { ContactSyncScreenState, createContactSyncScreenStore } from '@/store/contactSyncScreen'
+import { useGlobalStore } from '@/store/global/store'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { createContext, use, useEffect, useRef } from 'react'
+import { getUniqueId } from 'react-native-device-info'
 import { StoreApi, useStore } from 'zustand'
 
 interface ContactSyncScreenContextValue {
@@ -15,6 +22,7 @@ const ContactSyncScreenContext = createContext<ContactSyncScreenContextValue | u
 
 export function ContactSyncScreenProvider({ children }: { children?: React.ReactNode }) {
   const router = useRouter()
+  const userId = useGlobalStore((state) => state.userInfo?.id)
 
   const store = useRef<StoreApi<ContactSyncScreenState>>(undefined)
   const mockSyncInterval = useRef<number | undefined>(undefined)
@@ -32,12 +40,32 @@ export function ContactSyncScreenProvider({ children }: { children?: React.React
   const setSyncTitle = useStore(store.current, (state) => state.setSyncTitle)
   const setSyncDescription = useStore(store.current, (state) => state.setSyncDescription)
 
+  const contactSyncMutation = useMutation({
+    mutationFn: contactSync,
+  })
+
   const goToChatList = () => {
     router.replace(ROUTE.HOME)
   }
 
-  const handleSync = () => {
-    mockSync()
+  const handleSync = async () => {
+    const contacts = await getContacts()
+
+    const contactSyncRequest: ContactSyncRequest = {
+      ownerUserId: userId || '',
+      deviceId: await getUniqueId(),
+      contacts: contacts.flatMap(
+        (contact) =>
+          contact.phoneNumbers?.map((phoneNumber) => ({
+            name: contact.name,
+            phoneNumber: hashString(phoneNumber.number || ''),
+          })) || [],
+      ),
+    }
+
+    contactSyncMutation.mutate(contactSyncRequest)
+
+    // mockSync()
   }
 
   // TODO: to be removed

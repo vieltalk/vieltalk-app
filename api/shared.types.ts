@@ -30,3 +30,14 @@ export enum PrivacyPermission {
 export interface UserOnboardResponse {
   _id: string
 }
+
+export interface ContactSyncRequest {
+  contacts: Contact[]
+  deviceId: string
+  ownerUserId: string
+}
+
+export interface Contact {
+  name: string
+  phoneNumber: string
+}
