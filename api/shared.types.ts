@@ -41,3 +41,5 @@ export interface Contact {
   name: string
   phoneNumber: string
 }
+
+export interface ContactSyncSocketResponse {}

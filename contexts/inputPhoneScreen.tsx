@@ -10,7 +10,7 @@ import { useRouter } from 'expo-router'
 import { createContext, use } from 'react'
 import { UseFormReturn, useForm } from 'react-hook-form'
 import { Platform } from 'react-native'
-import { getSystemVersion, getUniqueId } from 'react-native-device-info'
+import { getSystemVersion, getUniqueIdSync } from 'react-native-device-info'
 import { z } from 'zod'
 
 const phoneNumberFormScheme = z
@@ -68,10 +68,10 @@ export function InputPhoneScreenProvider({ children }: { children?: React.ReactN
     },
   })
 
-  const onSubmit = async (data: PhoneNumberFormScheme) => {
+  const onSubmit = (data: PhoneNumberFormScheme) => {
     const phone = data.phoneNumber.startsWith('0') ? data.phoneNumber.slice(1) : data.phoneNumber
 
-    const deviceId = await getUniqueId()
+    const deviceId = getUniqueIdSync()
     const deviceModel = modelName || ''
     const osVersion = getSystemVersion()
     const phoneNumber = hashString(phone)

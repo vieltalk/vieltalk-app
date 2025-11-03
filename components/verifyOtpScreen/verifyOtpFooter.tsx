@@ -1,4 +1,4 @@
-import { useVerifyOtpContext } from '@/contexts/verifyOtp'
+import { useVerifyOtpContext } from '@/contexts/verifyOtpScreen'
 import { Trans } from '@lingui/react/macro'
 import { useRouter } from 'expo-router'
 import { Button, ButtonText } from '../ui/button'

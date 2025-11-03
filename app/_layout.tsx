@@ -2,6 +2,7 @@ import 'react-native-get-random-values'
 
 import { QueryClientProvider } from '@/components/queryClientProvider'
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider'
+import { SocketIoProvider } from '@/contexts/socketIo'
 import '@/global.css'
 import { I18nProvider } from '@/locale/i18nProvider'
 import { useGlobalStore } from '@/store/global/store'
@@ -25,7 +26,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     ;(async () => {
-      logEvent(getAnalytics(), 'screen_view' as any, {
+      await logEvent(getAnalytics(), 'screen_view' as any, {
         screen_name: pathname,
         screen_class: pathname,
       })
@@ -34,19 +35,21 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider>
-      <GluestackUIProvider mode="light">
-        <I18nProvider>
-          <Stack>
-            <Stack.Protected guard={isLoggedIn}>
-              <Stack.Screen name="(protected)" options={{ headerShown: false }} />
-            </Stack.Protected>
-            <Stack.Protected guard={!isLoggedIn}>
-              <Stack.Screen name="login" />
-            </Stack.Protected>
-          </Stack>
-        </I18nProvider>
-        <StatusBar style="auto" />
-      </GluestackUIProvider>
+      <SocketIoProvider>
+        <GluestackUIProvider mode="light">
+          <I18nProvider>
+            <Stack>
+              <Stack.Protected guard={isLoggedIn}>
+                <Stack.Screen name="(protected)" options={{ headerShown: false }} />
+              </Stack.Protected>
+              <Stack.Protected guard={!isLoggedIn}>
+                <Stack.Screen name="login" />
+              </Stack.Protected>
+            </Stack>
+          </I18nProvider>
+          <StatusBar style="auto" />
+        </GluestackUIProvider>
+      </SocketIoProvider>
     </QueryClientProvider>
   )
 }

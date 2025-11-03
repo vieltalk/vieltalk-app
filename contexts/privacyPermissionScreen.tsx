@@ -26,7 +26,7 @@ interface PrivacyPermissionContextValue {
 
 const PrivacyPermissionContext = createContext<PrivacyPermissionContextValue | undefined>(undefined)
 
-export function PrivacyPermissionProvider({ children }: { children?: React.ReactNode }) {
+export function PrivacyPermissionScreenProvider({ children }: { children?: React.ReactNode }) {
   const { i18n } = useLingui()
   const router = useRouter()
 
@@ -80,11 +80,11 @@ export function PrivacyPermissionProvider({ children }: { children?: React.React
   )
 }
 
-export function usePrivacyPermissionContext() {
+export function usePrivacyPermissionScreenContext() {
   const context = use(PrivacyPermissionContext)
 
   if (!context) {
-    throw new Error('usePrivacyPermissionContext must be used within a PrivacyPermissionProvider')
+    throw new Error('usePrivacyPermissionScreenContext must be used within a PrivacyPermissionScreenProvider')
   }
 
   return context

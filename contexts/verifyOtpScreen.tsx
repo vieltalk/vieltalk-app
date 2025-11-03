@@ -20,7 +20,7 @@ interface VerifyOtpContextValue {
 
 const VerifyOtpContext = createContext<VerifyOtpContextValue | undefined>(undefined)
 
-export function VerifyOtpProvider({ children }: { children?: React.ReactNode }) {
+export function VerifyOtpScreenProvider({ children }: { children?: React.ReactNode }) {
   const { phone } = useLocalSearchParams<{ phone: string }>()
   const router = useRouter()
 
@@ -45,11 +45,11 @@ export function VerifyOtpProvider({ children }: { children?: React.ReactNode }) 
   )
 }
 
-export function useVerifyOtpContext() {
+export function useVerifyOtpScreenContext() {
   const context = use(VerifyOtpContext)
 
   if (!context) {
-    throw new Error('useVerifyOtpContext must be used within a VerifyOtpProvider')
+    throw new Error('useVerifyOtpScreenContext must be used within a VerifyOtpScreenProvider')
   }
 
   return context

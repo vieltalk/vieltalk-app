@@ -1,4 +1,4 @@
-import { useVerifyOtpContext } from '@/contexts/verifyOtp'
+import { useVerifyOtpContext } from '@/contexts/verifyOtpScreen'
 import { Controller } from 'react-hook-form'
 import { OtpInput } from 'react-native-otp-entry'
 import { FormControl, FormControlError, FormControlErrorText } from '../ui/form-control'

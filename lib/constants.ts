@@ -10,3 +10,8 @@ export const CDN_API_ENDPOINTS = {
 export enum ReactQueryKeys {
   PRIVACY_PERMISSION = 'privacyPermission',
 }
+
+export enum SocketEvents {
+  CONTACT_SYNCED = 'contact-synced',
+  CONTACT_UNSYNCED = 'contact-unsynced',
+}

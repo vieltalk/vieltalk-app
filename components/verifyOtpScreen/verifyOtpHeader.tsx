@@ -1,4 +1,4 @@
-import { useVerifyOtpContext } from '@/contexts/verifyOtp'
+import { useVerifyOtpContext } from '@/contexts/verifyOtpScreen'
 import { formatPhoneNumber } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
 import { Heading } from '../ui/heading'
