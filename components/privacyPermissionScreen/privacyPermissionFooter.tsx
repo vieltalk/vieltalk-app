@@ -1,12 +1,12 @@
 import { PrivacyPermission } from '@/api/shared.types'
-import { usePrivacyPermissionContext } from '@/contexts/privacyPermissionScreen'
+import { usePrivacyPermissionScreenContext } from '@/contexts/privacyPermissionScreen'
 import { Trans } from '@lingui/react/macro'
 import { useStore } from 'zustand'
 import { Button, ButtonText } from '../ui/button'
 import { HStack } from '../ui/hstack'
 
 export function PrivacyPermissionFooter() {
-  const { stateStore, handleAllowPress, goNextScreen } = usePrivacyPermissionContext()
+  const { stateStore, handleAllowPress, goNextScreen } = usePrivacyPermissionScreenContext()
 
   const allowedPermissions = useStore(stateStore, (state) => state.allowedPermissions)
 

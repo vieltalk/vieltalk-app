@@ -19,7 +19,7 @@ import { VStack } from '../ui/vstack'
 
 export function HomeActions() {
   return (
-    <VStack className="border-b border-outline-200 p-4" space="lg">
+    <VStack className="border-b border-outline-200 p-4 pb-0" space="lg">
       <FormControl isInvalid={false}>
         <Input>
           <InputField

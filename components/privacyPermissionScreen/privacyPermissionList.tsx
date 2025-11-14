@@ -7,7 +7,7 @@ import { HStack } from '@/components/ui/hstack'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { VStack } from '@/components/ui/vstack'
-import { usePrivacyPermissionContext } from '@/contexts/privacyPermissionScreen'
+import { usePrivacyPermissionScreenContext } from '@/contexts/privacyPermissionScreen'
 import { cn } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
 import { ExternalLink } from 'lucide-react-native'
@@ -17,7 +17,7 @@ import { Switch } from '../ui/switch'
 import { PrivacyIcon } from './privacyIcon'
 
 export function PrivacyPermissionListing() {
-  const { privacyQuery, stateStore } = usePrivacyPermissionContext()
+  const { privacyQuery, stateStore } = usePrivacyPermissionScreenContext()
 
   const allowedPermissions = useStore(stateStore, (state) => state.allowedPermissions)
   const setAllowedPermissions = useStore(stateStore, (state) => state.setAllowedPermissions)

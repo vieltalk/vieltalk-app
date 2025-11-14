@@ -76,34 +76,15 @@ export function InputPhoneScreenProvider({ children }: { children?: React.ReactN
     const osVersion = getSystemVersion()
     const phoneNumber = hashString(phone)
 
-    console.log(
-      'userOnboardMutation',
-      JSON.stringify(
-        {
-          avatar: '',
-          deviceId,
-          phoneNumber,
-          deviceType: Platform.OS,
-          deviceModel,
-          osVersion,
-          appVersion: '1.0.0',
-        },
-        null,
-        2,
-      ),
-    )
-
-    router.push(ROUTE.CONTACT_SYNC)
-
-    // userOnboardMutation.mutate({
-    //   avatar: '',
-    //   deviceId,
-    //   phoneNumber,
-    //   deviceType: Platform.OS,
-    //   deviceModel,
-    //   osVersion,
-    //   appVersion: '1.0.0',
-    // })
+    userOnboardMutation.mutate({
+      avatar: '',
+      deviceId,
+      phoneNumber,
+      deviceType: Platform.OS,
+      deviceModel,
+      osVersion,
+      appVersion: '1.0.0',
+    })
   }
 
   return (
