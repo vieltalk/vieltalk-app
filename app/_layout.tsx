@@ -43,7 +43,7 @@ export default function RootLayout() {
                 <Stack.Screen name="(protected)" options={{ headerShown: false }} />
               </Stack.Protected>
               <Stack.Protected guard={!isLoggedIn}>
-                <Stack.Screen name="login" />
+                <Stack.Screen name="(onboard)" options={{ headerShown: false }} />
               </Stack.Protected>
             </Stack>
           </I18nProvider>

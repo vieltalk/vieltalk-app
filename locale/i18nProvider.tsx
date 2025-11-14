@@ -2,8 +2,8 @@ import { AppLanguage, useGlobalStore } from '@/store/global/store'
 import { i18n } from '@lingui/core'
 import { I18nProvider as DefaultI18nProvider } from '@lingui/react'
 import { useEffect } from 'react'
-import { messages as enMessages } from './locales/en/messages'
-import { messages as kmMessages } from './locales/km/messages'
+import { messages as enMessages } from './locales/en/messages.po'
+import { messages as kmMessages } from './locales/km/messages.po'
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const preferredLanguage = useGlobalStore((state) => state.preferredLanguage)

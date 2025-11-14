@@ -14,7 +14,7 @@ import { PrivacyPermissionScreenState, createPrivacyPermissionScreenStore } from
 import { useLingui } from '@lingui/react/macro'
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
-import { createContext, use, useRef } from 'react'
+import { createContext, use, useState } from 'react'
 import { StoreApi, useStore } from 'zustand'
 
 interface PrivacyPermissionContextValue {
@@ -30,13 +30,9 @@ export function PrivacyPermissionScreenProvider({ children }: { children?: React
   const { i18n } = useLingui()
   const router = useRouter()
 
-  const store = useRef<StoreApi<PrivacyPermissionScreenState>>(undefined)
+  const [store] = useState(() => createPrivacyPermissionScreenStore())
 
-  if (!store.current) {
-    store.current = createPrivacyPermissionScreenStore()
-  }
-
-  const allowedPermissions = useStore(store.current, (state) => state.allowedPermissions)
+  const allowedPermissions = useStore(store, (state) => state.allowedPermissions)
 
   const privacyQuery = useQuery({
     queryKey: [ReactQueryKeys.PRIVACY_PERMISSION, i18n.locale],
@@ -74,7 +70,7 @@ export function PrivacyPermissionScreenProvider({ children }: { children?: React
   }
 
   return (
-    <PrivacyPermissionContext value={{ privacyQuery, stateStore: store.current, handleAllowPress, goNextScreen }}>
+    <PrivacyPermissionContext value={{ privacyQuery, stateStore: store, handleAllowPress, goNextScreen }}>
       {children}
     </PrivacyPermissionContext>
   )

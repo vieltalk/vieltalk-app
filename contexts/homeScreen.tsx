@@ -1,26 +1,11 @@
-import { ROUTE } from '@/lib/routes'
-import { useGlobalStore } from '@/store/global/store'
-import { useRouter } from 'expo-router'
 import { createContext, use } from 'react'
 
-interface HomeScreenContextValue {
-  handleLogout: () => void
-}
+interface HomeScreenContextValue {}
 
 const HomeScreenContext = createContext<HomeScreenContextValue | undefined>(undefined)
 
 export function HomeScreenProvider({ children }: { children?: React.ReactNode }) {
-  const router = useRouter()
-  const setIsLoggedIn = useGlobalStore((state) => state.setIsLoggedIn)
-  const setUserInfo = useGlobalStore((state) => state.setUserInfo)
-
-  const handleLogout = () => {
-    setIsLoggedIn(false)
-    setUserInfo(null)
-    router.replace(ROUTE.LOGIN)
-  }
-
-  return <HomeScreenContext value={{ handleLogout }}>{children}</HomeScreenContext>
+  return <HomeScreenContext value={{}}>{children}</HomeScreenContext>
 }
 
 export function useHomeScreenContext() {

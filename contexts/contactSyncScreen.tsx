@@ -1,15 +1,17 @@
 import { ContactSyncRequest } from '@/api/shared.types'
 import { contactSync } from '@/api/user'
+import { SocketEvents } from '@/lib/constants'
 import { hashString } from '@/lib/encryption'
 import { getContacts } from '@/lib/permissions'
 import { ROUTE } from '@/lib/routes'
 import { ContactSyncScreenState, createContactSyncScreenStore } from '@/store/contactSyncScreen'
 import { useGlobalStore } from '@/store/global/store'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'expo-router'
-import { createContext, use, useRef } from 'react'
+import { useNavigation, useRouter } from 'expo-router'
+import { createContext, use, useEffect, useRef, useState } from 'react'
 import { getUniqueIdSync } from 'react-native-device-info'
-import { StoreApi } from 'zustand'
+import { StoreApi, useStore } from 'zustand'
+import { useSocketIoContext } from './socketIo'
 
 interface ContactSyncScreenContextValue {
   stateStore: StoreApi<ContactSyncScreenState>
@@ -21,23 +23,22 @@ const ContactSyncScreenContext = createContext<ContactSyncScreenContextValue | u
 
 export function ContactSyncScreenProvider({ children }: { children?: React.ReactNode }) {
   const router = useRouter()
+  const navigation = useNavigation()
+  const { socket } = useSocketIoContext()
   const userId = useGlobalStore((state) => state.userInfo?.id)
 
-  const store = useRef<StoreApi<ContactSyncScreenState>>(undefined)
-  // const mockSyncInterval = useRef<number | undefined>(undefined)
+  const [store] = useState(() => createContactSyncScreenStore())
 
-  if (!store.current) {
-    store.current = createContactSyncScreenStore()
-  }
+  const contactTotalCount = useRef(0)
+  const syncedContactCount = useRef(0)
 
-  // const setIsSyncing = useStore(store.current, (state) => state.setIsSyncing)
-  // const setIsSyncComplete = useStore(store.current, (state) => state.setIsSyncComplete)
-  // const syncPercentage = useStore(store.current, (state) => state.syncPercentage)
-  // const setSyncPercentage = useStore(store.current, (state) => state.setSyncPercentage)
-  // const friendsCount = useStore(store.current, (state) => state.friendsCount)
-  // const setFriendsCount = useStore(store.current, (state) => state.setFriendsCount)
-  // const setSyncTitle = useStore(store.current, (state) => state.setSyncTitle)
-  // const setSyncDescription = useStore(store.current, (state) => state.setSyncDescription)
+  const setIsSyncing = useStore(store, (state) => state.setIsSyncing)
+  const setIsSyncComplete = useStore(store, (state) => state.setIsSyncComplete)
+  const friendsCount = useStore(store, (state) => state.friendsCount)
+  const setSyncPercentage = useStore(store, (state) => state.setSyncPercentage)
+  const setFriendsCount = useStore(store, (state) => state.setFriendsCount)
+  const setSyncTitle = useStore(store, (state) => state.setSyncTitle)
+  const setSyncDescription = useStore(store, (state) => state.setSyncDescription)
 
   const contactSyncMutation = useMutation({
     mutationFn: contactSync,
@@ -48,59 +49,66 @@ export function ContactSyncScreenProvider({ children }: { children?: React.React
   }
 
   const handleSync = async () => {
+    setIsSyncing(true)
+    setSyncTitle('Finding your friends...')
+    setSyncDescription('Matching your contacts with existing users.')
+
+    navigation.setOptions({ gestureEnabled: false, headerShown: false })
+
     const contacts = await getContacts()
+
+    const formattedContacts = contacts.flatMap(
+      (contact) =>
+        contact.phoneNumbers?.map((phoneNumber) => ({
+          name: contact.name,
+          phoneNumber: hashString(phoneNumber.number || ''),
+        })) || [],
+    )
+
+    contactTotalCount.current = formattedContacts.length
 
     const contactSyncRequest: ContactSyncRequest = {
       ownerUserId: userId || '',
       deviceId: getUniqueIdSync(),
-      contacts: contacts.flatMap(
-        (contact) =>
-          contact.phoneNumbers?.map((phoneNumber) => ({
-            name: contact.name,
-            phoneNumber: hashString(phoneNumber.number || ''),
-          })) || [],
-      ),
+      contacts: formattedContacts,
     }
 
     contactSyncMutation.mutate(contactSyncRequest)
-
-    // mockSync()
   }
 
-  // TODO: to be removed
-  // const mockSync = () => {
-  //   setIsSyncing(true)
-  //   setSyncTitle('Finding your friends...')
-  //   setSyncDescription('Matching your contacts with existing users.')
+  const updateSyncPercentage = () => {
+    syncedContactCount.current += 1
 
-  //   mockSyncInterval.current = setInterval(() => {
-  //     setSyncPercentage((prev) => prev + randomNumBetween(0, 15))
-  //     setFriendsCount((prev) => prev + randomNumBetween(0, 5))
-  //   }, 1000)
-  // }
+    const percentage = (syncedContactCount.current / contactTotalCount.current) * 100
+    setSyncPercentage(percentage)
 
-  // // TODO: to be removed
-  // useEffect(() => {
-  //   if (syncPercentage >= 100) {
-  //     clearInterval(mockSyncInterval.current)
-  //     setIsSyncing(false)
-  //     setIsSyncComplete(true)
-  //     setSyncTitle('Contact Syncd!')
-  //     setSyncDescription(`We found ${friendsCount} friends who are already using Vieltalk.`)
-  //   }
+    if (percentage >= 100) {
+      setIsSyncing(false)
+      setIsSyncComplete(true)
+      setSyncTitle('Contact Synced!')
+      setSyncDescription(`We found ${friendsCount} friends who are already using Vieltalk.`)
+    }
+  }
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [syncPercentage])
+  useEffect(() => {
+    socket.on(SocketEvents.CONTACT_SYNCED, () => {
+      updateSyncPercentage()
+      setFriendsCount((prev) => prev + 1)
+    })
+    socket.on(SocketEvents.CONTACT_UNSYNCED, () => {
+      updateSyncPercentage()
+    })
 
-  // // TODO: to be removed
-  // useEffect(() => {
-  //   return () => {
-  //     clearInterval(mockSyncInterval.current)
-  //   }
-  // }, [])
+    return () => {
+      socket.off(SocketEvents.CONTACT_SYNCED)
+      socket.off(SocketEvents.CONTACT_UNSYNCED)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket])
 
   return (
-    <ContactSyncScreenContext value={{ stateStore: store.current, goToChatList, handleSync }}>
+    <ContactSyncScreenContext value={{ stateStore: store, goToChatList, handleSync }}>
       {children}
     </ContactSyncScreenContext>
   )

@@ -1,5 +1,5 @@
 import { useGlobalStore } from '@/store/global/store'
-import { createContext, use, useEffect, useRef } from 'react'
+import { createContext, use, useEffect, useState } from 'react'
 import { getUniqueIdSync } from 'react-native-device-info'
 import { Socket, io } from 'socket.io-client'
 
@@ -12,43 +12,42 @@ const SocketIoContext = createContext<SocketIoContextValue | undefined>(undefine
 export function SocketIoProvider({ children }: { children?: React.ReactNode }) {
   const isLoggedIn = useGlobalStore((state) => state.isLoggedIn)
   const userInfo = useGlobalStore((state) => state.userInfo)
-  const socket = useRef<Socket>(io(process.env.EXPO_PUBLIC_SOCKET_BASE_URL, { autoConnect: false }))
+
+  const [socket] = useState<Socket>(() => io(process.env.EXPO_PUBLIC_SOCKET_BASE_URL, { autoConnect: false }))
 
   useEffect(() => {
     if (!isLoggedIn || !userInfo?.id) return
 
-    const socketRef = socket.current
+    socket.io.opts.query = { userId: userInfo.id, deviceId: getUniqueIdSync() }
 
-    socketRef.io.opts.query = { userId: userInfo.id, deviceId: getUniqueIdSync() }
+    socket.connect()
 
-    socketRef.connect()
-
-    socketRef.on('connect', () => {
+    socket.on('connect', () => {
       console.log('Socket connected')
     })
 
-    socketRef.on('connect_error', (error) => {
+    socket.on('connect_error', (error) => {
       console.log('Socket connect error', JSON.stringify(error, null, 2))
     })
 
-    socketRef.on('disconnect', () => {
+    socket.on('disconnect', () => {
       console.log('Socket disconnected')
     })
 
-    socketRef.on('disconnecting', () => {
+    socket.on('disconnecting', () => {
       console.log('Socket disconnecting')
     })
 
     return () => {
-      socketRef.off('connect')
-      socketRef.off('connect_error')
-      socketRef.off('disconnect')
-      socketRef.off('disconnecting')
-      socketRef.disconnect()
+      socket.off('connect')
+      socket.off('connect_error')
+      socket.off('disconnect')
+      socket.off('disconnecting')
+      socket.disconnect()
     }
-  }, [isLoggedIn, userInfo?.id])
+  }, [isLoggedIn, userInfo?.id, socket])
 
-  return <SocketIoContext value={{ socket: socket.current }}>{children}</SocketIoContext>
+  return <SocketIoContext value={{ socket }}>{children}</SocketIoContext>
 }
 
 export function useSocketIoContext() {
