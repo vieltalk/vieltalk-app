@@ -32,9 +32,11 @@ export function ContactSyncScreenProvider({ children }: { children?: React.React
   const contactTotalCount = useRef(0)
   const syncedContactCount = useRef(0)
 
+  const friendsCount = useStore(store, (state) => state.friendsCount)
+  const isSyncComplete = useStore(store, (state) => state.isSyncComplete)
+
   const setIsSyncing = useStore(store, (state) => state.setIsSyncing)
   const setIsSyncComplete = useStore(store, (state) => state.setIsSyncComplete)
-  const friendsCount = useStore(store, (state) => state.friendsCount)
   const setSyncPercentage = useStore(store, (state) => state.setSyncPercentage)
   const setFriendsCount = useStore(store, (state) => state.setFriendsCount)
   const setSyncTitle = useStore(store, (state) => state.setSyncTitle)
@@ -106,6 +108,13 @@ export function ContactSyncScreenProvider({ children }: { children?: React.React
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
+
+  useEffect(() => {
+    if (isSyncComplete) {
+      socket.off(SocketEvents.CONTACT_SYNCED)
+      socket.off(SocketEvents.CONTACT_UNSYNCED)
+    }
+  }, [isSyncComplete, socket])
 
   return (
     <ContactSyncScreenContext value={{ stateStore: store, goToChatList, handleSync }}>
