@@ -7,7 +7,7 @@ import { Stack } from 'expo-router'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function InputPhoneScreen() {
+export function InputPhoneScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTransparent: true, title: '' }} />

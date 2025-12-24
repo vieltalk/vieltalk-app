@@ -2,16 +2,16 @@ import { VStack } from '@/components/ui/vstack'
 import { VerifyOtpFooter } from '@/components/verifyOtpScreen/verifyOtpFooter'
 import { VerifyOtpForm } from '@/components/verifyOtpScreen/verifyOtpForm'
 import { VerifyOtpHeader } from '@/components/verifyOtpScreen/verifyOtpHeader'
-import { VerifyOtpProvider } from '@/contexts/verifyOtpScreen'
+import { VerifyOtpScreenProvider } from '@/contexts/verifyOtpScreen'
 import { Stack } from 'expo-router'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function VerifyOtpScreen() {
+export function VerifyOtpScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTransparent: true, title: '' }} />
-      <VerifyOtpProvider>
+      <VerifyOtpScreenProvider>
         <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <SafeAreaView className="flex-1">
             <VStack className="flex-1">
@@ -25,7 +25,7 @@ export default function VerifyOtpScreen() {
             </VStack>
           </SafeAreaView>
         </KeyboardAvoidingView>
-      </VerifyOtpProvider>
+      </VerifyOtpScreenProvider>
     </>
   )
 }

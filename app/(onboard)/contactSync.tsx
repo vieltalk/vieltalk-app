@@ -1,4 +1,4 @@
-import ContactSyncScreen from '@/components/contactSyncScreen/screen'
+import { ContactSyncScreen } from '@/components/contactSyncScreen/screen'
 
 export default function ContactSync() {
   return <ContactSyncScreen />

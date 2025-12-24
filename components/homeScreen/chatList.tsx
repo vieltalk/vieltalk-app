@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { FlatList } from 'react-native'
+import { LegendList } from '@legendapp/list'
 import { Avatar, AvatarBadge, AvatarFallbackText, AvatarImage } from '../ui/avatar'
 import { Box } from '../ui/box'
 import { Heading } from '../ui/heading'
@@ -10,7 +10,7 @@ import { VStack } from '../ui/vstack'
 
 export function ChatList() {
   return (
-    <FlatList
+    <LegendList
       data={Array.from({ length: 30 }, (_, i) => ({
         id: i.toString(),
         name: `Chat ${i + 1}`,
@@ -20,6 +20,7 @@ export function ChatList() {
       }))}
       renderItem={({ item }) => <ChatItem {...item} />}
       keyExtractor={(item) => item.id}
+      recycleItems
     />
   )
 }

@@ -7,7 +7,7 @@ import { Stack } from 'expo-router'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function ContactSyncScreen() {
+export function ContactSyncScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTransparent: true, title: '' }} />

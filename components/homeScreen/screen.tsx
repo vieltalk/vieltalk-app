@@ -6,7 +6,7 @@ import { ChatList } from './chatList'
 import { HomeActions } from './homeActions'
 import { HomeHeader } from './homeHeader'
 
-export default function HomeScreen() {
+export function HomeScreen() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />

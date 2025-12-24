@@ -4,7 +4,7 @@ import { VStack } from '@/components/ui/vstack'
 import { Stack } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function LoginScreen() {
+export function LoginScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTransparent: true, title: '' }} />

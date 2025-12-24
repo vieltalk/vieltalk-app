@@ -7,7 +7,7 @@ import { InputUsernameForm } from './inputUsernameForm'
 import { InputUsernameHeader } from './inputUsernameHeader'
 import { InputUsernameNextBtn } from './inputUsernameNextBtn'
 
-export default function InputUsernameScreen() {
+export function InputUsernameScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTransparent: true, title: '' }} />
