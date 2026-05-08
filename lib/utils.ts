@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
 export function randomNumBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
@@ -12,4 +19,8 @@ export function hexToRgb(hex: string) {
         b: parseInt(result[3], 16),
       }
     : null
+}
+
+export function formatPhoneNumber(phoneNumber: string): string {
+  return `${phoneNumber.substring(0, 3)} ${phoneNumber.substring(3, 5)} ${phoneNumber.substring(5, 8)} ${phoneNumber.substring(8)}`
 }

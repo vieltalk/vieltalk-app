@@ -42,7 +42,6 @@ app-example
 /ios
 /android
 
-# Ignore npm and yarn lock files
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# Google services
+google-services.json
+GoogleService-Info.plist

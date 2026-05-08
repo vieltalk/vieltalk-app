@@ -1,27 +1,29 @@
 {
   "expo": {
-    "name": "vieltalk-chat-mobile",
-    "slug": "vieltalk-chat-mobile",
-    "version": "1.0.0",
+    "name": "Vieltalk",
+    "slug": "vieltalk",
+    "version": "0.1.0-alpha.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "vieltalkchatmobile",
+    "scheme": "vieltalk",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.vieltalkchatmobile"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.marcobytes.vieltalk"
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.vieltalkchatmobile"
+      "package": "com.marcobytes.vieltalk",
+      "permissions": ["RECEIVE_BOOT_COMPLETED", "SCHEDULE_EXACT_ALARM"],
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "output": "static",
@@ -46,10 +48,23 @@
         "expo-build-properties",
         {
           "android": {
-            "minSdkVersion": 26
+            "minSdkVersion": 26,
+            "usesCleartextTraffic": true
           }
         }
-      ]
+      ],
+      [
+        "expo-asset",
+        {
+          "assets": ["./assets"]
+        }
+      ],
+      "expo-contacts",
+      "expo-location",
+      "expo-camera",
+      "expo-image-picker",
+      "expo-audio",
+      "@react-native-firebase/app"
     ],
     "experiments": {
       "typedRoutes": true,

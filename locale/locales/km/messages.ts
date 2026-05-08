@@ -1,1 +1,0 @@
-/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"D327jO\":[\"អេក្រង់ចូលនៃ Vieltalk Chat\"],\"vaySeZ\":[\"អេក្រង់ដើមនៃ Vieltalk Chat\"]}")as Messages;

@@ -1,0 +1,99 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-11-14 15:22+0700\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#: components/contactSyncScreen/contactSyncFooter.tsx
+msgid "Privacy protected: "
+msgstr "Privacy protected: "
+
+#: components/contactSyncScreen/contactSyncFooter.tsx
+msgid "Your contacts are encrypted and only used for friend discovery. We never store or share your contact information."
+msgstr "Your contacts are encrypted and only used for friend discovery. We never store or share your contact information."
+
+#: components/contactSyncScreen/contactSyncFooter.tsx
+msgid "Start Chatting"
+msgstr "Start Chatting"
+
+#: components/contactSyncScreen/contactSyncFooter.tsx
+#: components/privacyPermissionScreen/privacyPermissionFooter.tsx
+msgid "Not Now"
+msgstr "Not Now"
+
+#: components/contactSyncScreen/contactSyncFooter.tsx
+msgid "Sync"
+msgstr "Sync"
+
+#: components/inputPhoneScreen/phoneNumberHeader.tsx
+msgid "Phone Number"
+msgstr "Phone Number"
+
+#: components/inputPhoneScreen/phoneNumberHeader.tsx
+msgid "We will send you a verification code."
+msgstr "We will send you a verification code."
+
+#: components/inputPhoneScreen/phoneNumberNextBtn.tsx
+#: components/inputUsernameScreen/inputUsernameNextBtn.tsx
+#: components/verifyOtpScreen/verifyOtpFooter.tsx
+msgid "Next"
+msgstr "Next"
+
+#: components/inputUsernameScreen/inputUsernameHeader.tsx
+msgid "Your Profile"
+msgstr "Your Profile"
+
+#: components/inputUsernameScreen/inputUsernameHeader.tsx
+msgid "Profiles are visible to your contacts, chats and groups."
+msgstr "Profiles are visible to your contacts, chats and groups."
+
+#: components/loginScreen/getStartedBtn.tsx
+msgid "Get Started"
+msgstr "Get Started"
+
+#: components/loginScreen/loginHero.tsx
+msgid "Welcome to VielTalk"
+msgstr "Welcome to VielTalk"
+
+#: components/loginScreen/loginHero.tsx
+msgid "Connect freely — where every conversation starts with privacy and speed."
+msgstr "Connect freely — where every conversation starts with privacy and speed."
+
+#: components/privacyPermissionScreen/privacyPermissionFooter.tsx
+msgid "Allow All Permissions"
+msgstr "Allow All Permissions"
+
+#: components/privacyPermissionScreen/privacyPermissionFooter.tsx
+msgid "Allow Permissions"
+msgstr "Allow Permissions"
+
+#: components/privacyPermissionScreen/privacyPermissionHeader.tsx
+msgid "Privacy & Permissions"
+msgstr "Privacy & Permissions"
+
+#: components/privacyPermissionScreen/privacyPermissionHeader.tsx
+msgid "We respect your privacy. Choose what data you're comfortable sharing to personalize your chat experience."
+msgstr "We respect your privacy. Choose what data you're comfortable sharing to personalize your chat experience."
+
+#: components/privacyPermissionScreen/privacyPermissionList.tsx
+msgid "required"
+msgstr "required"
+
+#: components/privacyPermissionScreen/privacyPermissionList.tsx
+msgid "Learn More"
+msgstr "Learn More"
+
+#: components/verifyOtpScreen/verifyOtpFooter.tsx
+msgid "Wrong Number"
+msgstr "Wrong Number"
+
+#: components/verifyOtpScreen/verifyOtpHeader.tsx
+msgid "Verification Code"
+msgstr "Verification Code"
+
+#: components/verifyOtpScreen/verifyOtpHeader.tsx
+msgid "Enter the code we sent to +{phoneNumber}"
+msgstr "Enter the code we sent to +{phoneNumber}"

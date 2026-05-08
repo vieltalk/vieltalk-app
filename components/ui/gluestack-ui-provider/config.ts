@@ -1,20 +1,20 @@
-'use client';
-import { vars } from 'nativewind';
+'use client'
+import { vars } from 'nativewind'
 
 export const config = {
   light: vars({
-    '--color-primary-0': '179 179 179',
-    '--color-primary-50': '153 153 153',
-    '--color-primary-100': '128 128 128',
-    '--color-primary-200': '115 115 115',
-    '--color-primary-300': '102 102 102',
-    '--color-primary-400': '82 82 82',
-    '--color-primary-500': '51 51 51',
-    '--color-primary-600': '41 41 41',
-    '--color-primary-700': '31 31 31',
-    '--color-primary-800': '13 13 13',
-    '--color-primary-900': '10 10 10',
-    '--color-primary-950': '8 8 8',
+    '--color-primary-0': '242 248 255',
+    '--color-primary-50': '240 247 255',
+    '--color-primary-100': '224 239 254',
+    '--color-primary-200': '185 223 254',
+    '--color-primary-300': '124 197 253',
+    '--color-primary-400': '62 172 250',
+    '--color-primary-500': '12 142 235',
+    '--color-primary-600': '0 111 201',
+    '--color-primary-700': '2 87 162',
+    '--color-primary-800': '6 75 134',
+    '--color-primary-900': '11 63 111',
+    '--color-primary-950': '7 40 74',
 
     /* Secondary  */
     '--color-secondary-0': '253 253 253',
@@ -155,18 +155,18 @@ export const config = {
     '--color-indicator-error': '185 28 28',
   }),
   dark: vars({
-    '--color-primary-0': '166 166 166',
-    '--color-primary-50': '175 175 175',
-    '--color-primary-100': '186 186 186',
-    '--color-primary-200': '197 197 197',
-    '--color-primary-300': '212 212 212',
-    '--color-primary-400': '221 221 221',
-    '--color-primary-500': '230 230 230',
-    '--color-primary-600': '240 240 240',
-    '--color-primary-700': '250 250 250',
-    '--color-primary-800': '253 253 253',
-    '--color-primary-900': '254 249 249',
-    '--color-primary-950': '253 252 252',
+    '--color-primary-0': '5, 23, 38',
+    '--color-primary-50': '12 42 69',
+    '--color-primary-100': '19 66 103',
+    '--color-primary-200': '15 78 125',
+    '--color-primary-300': '14 92 150',
+    '--color-primary-400': '15 114 184',
+    '--color-primary-500': '29 145 218',
+    '--color-primary-600': '69 172 235',
+    '--color-primary-700': '133 200 244',
+    '--color-primary-800': '190 225 249',
+    '--color-primary-900': '226 240 252',
+    '--color-primary-950': '241 248 254',
 
     /* Secondary  */
     '--color-secondary-0': '20 20 20',
@@ -306,4 +306,4 @@ export const config = {
     '--color-indicator-info': '161 199 245',
     '--color-indicator-error': '232 70 69',
   }),
-};
+}
